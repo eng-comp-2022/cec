@@ -51,6 +51,13 @@ def grid_metrics():
 
 
 def displayable_data(grid_data):
+    """
+    displayable data: function to transforms the grid matrix data from all calculations to a format that 
+    can be diplayed on out map UI. It i
+    :param grid_data: grid data from 
+
+    :return: data frame of tranformed data ready for dispayed
+    """ 
     rows, cols = grid_data.shape
 
     display_ids = []
