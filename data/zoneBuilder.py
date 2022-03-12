@@ -23,8 +23,8 @@ for i in range(width):
         for j in range(height):
             json_data["features"].append({"type": "Feature", "properties": {"AREA": 1}, "geometry": {"type": "Polygon", "coordinates": [[[lat, lon], [lat, lon-eps], [lat+eps, lon-eps], [lat+eps, lon]]]}, "id": str(id)})
             id += 1
-            lon -= eps
-        lat += eps2
+            lon -= eps2
+        lat += eps
         lon = top_left_lon
         
 with open("zoneData.json", "w") as f:
