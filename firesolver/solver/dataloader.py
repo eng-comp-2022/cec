@@ -46,6 +46,7 @@ def load_csv():
             smallest_cols = cols
 
     # clip data to smallest size
+    print("original shape", smallest_rows, "x", smallest_cols)
     for name in _csv_names:
         _data_frame_dict[name] = np.resize(
             _data_frame_dict[name], (smallest_rows, smallest_cols)

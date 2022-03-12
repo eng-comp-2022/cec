@@ -2,11 +2,9 @@ import dataloader
 import numpy as np
 from statsmodels.stats.weightstats import ztest as ztest
 import math
+import sys
 
-
-def rain_data():
-    rain_data = dataloader.get_data("average_rainfall")
-    return np.multiply(rain_data, 1.0)
+np.set_printoptions(threshold=sys.maxsize)
 
 
 def grid_metrics():
@@ -20,9 +18,6 @@ def grid_metrics():
     DMC = dataloader.normalize_data(duff_moisture_content(rain_data))
     DC = dataloader.normalize_data(drought_code(rain_data))
 
-    print("dmc", DMC)
-    print("norm dmc", DC)
-
     metric = (
         np.multiply(foliage_data, 0.20)
         + np.multiply(temp, 0.28)
@@ -35,12 +30,31 @@ def grid_metrics():
     return metric
 
 
-def significant_areas(data, alpha=0.05):
-    _, p_vals = ztest(data, value=np.mean(data))
-    return p_vals >= alpha
+def significant_areas(data, z_threshold=3):
+    sample_mean = np.mean(data)
+    sample_std = np.std(data)
+    standard_error = sample_std / math.sqrt(data.size)
+
+    def z_score(sample):
+        return (sample - sample_mean) / standard_error
+
+    transform = np.vectorize(z_score)
+    sigs = transform(data)
+    print(sigs)
+    return sigs
+    # print(sample_mean, sample_std, standard_error)
+    # original_shape = data.shape
+    # print("original shape", original_shape)
+    # sample_data = data.reshape(data.size, 1)
+    # _, p_vals = ztest(sample_data.tolist(), value=np.mean(data))
+
+    # print("pvals: ", p_vals)
+    # p_vals = p_vals.reshape(original_shape)
+    # mask = p_vals >= alpha
+    # print("new shape", mask.shape)
+    # return mask
 
 
-#
 def duff_moisture_content(ave_rainfall):
     def moisture_content_element(element):
         if element <= 1.5:
@@ -86,3 +100,6 @@ if __name__ == "__main__":
     # print("SE:LRRRRRRRRJJJJj")
     # print(drought_code(rain_data()))
     # print(duff_moisture_content(rain_data()))
+    s = significant_areas(grid_metrics())
+    print(s[s == True].size)
+    print(s.size)
