@@ -31,9 +31,15 @@ def get_indexes_of_water_sites():
     return result
 
 
-def assign_firestation_to_key_loc():
+def assign_firestation_to_key_locs():
     key_sites = get_indexes_of_key_sites()
-
     fire_stations = get_indexes_of_fire_stations()
+
+    for station in fire_stations:
+        if station == 'A':
+            elig = {}
+        elif station == 'B':
+            elig = {'2', '3', '4', '5', '6'}
+        else:
 
     print
