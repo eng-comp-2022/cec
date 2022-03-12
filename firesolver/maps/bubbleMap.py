@@ -5,7 +5,7 @@ import pandas as pd
 # ##############################
 
 # Generate the map of NB using a csv created by the optimization
-def generateFireStationMap(saveMap, filePath):
+def generateStationMap(saveMap, filePath):
 
     # Fake Data to show form it should take, as well as for building/testing
     # Format is City, Lat, Lon, Type
@@ -26,29 +26,29 @@ def generateFireStationMap(saveMap, filePath):
     # Create the base figure to be edited
     fig = go.Figure()
 
-    # config = {"displayModeBar": False}
+    config = {"displayModeBar": False}
 
-    # # Iterate through the data list to
-    # for i in range(len(data)):
-    #     tempLon = data[i]["Lon"]
-    #     tempLat = data[i]["Lat"]
-    #     towerType = data[i]["Type"]
-    #     fig.add_trace(
-    #         go.Scattergeo(
-    #             # Pull all the necessary data
-    #             text=data[i]["City"],
-    #             name=data[i]["City"] + ", Type " + str(towerType),
-    #             lat=[tempLat],
-    #             lon=[tempLon],
-    #             marker=dict(
-    #                 sizemode="diameter",  # THIS MEANS THE BUBBLES USE DIAMETER, KEEP IN MIND DURING CALCULATION
-    #                 size=diam[towerType],  # Size to scale
-    #                 color=colors[towerType - 1],
-    #                 line_width=0,
-    #                 opacity=0.80,
-    #             ),
-    #         )
-    #     )
+    # Iterate through the data list to
+    for i in range(len(data)):
+        tempLon = data[i]["Lon"]
+        tempLat = data[i]["Lat"]
+        towerType = data[i]["Type"]
+        fig.add_trace(
+            go.Scattergeo(
+                # Pull all the necessary data
+                text=data[i]["City"],
+                name=data[i]["City"] + ", Type " + str(towerType),
+                lat=[tempLat],
+                lon=[tempLon],
+                marker=dict(
+                    sizemode="diameter",  # THIS MEANS THE BUBBLES USE DIAMETER, KEEP IN MIND DURING CALCULATION
+                    size=diam[towerType],  # Size to scale
+                    color=colors[towerType - 1],
+                    line_width=0,
+                    opacity=0.80,
+                ),
+            )
+        )
 
     # Set the layout of the map now that we have data generated
     fig.update_layout(
@@ -94,32 +94,3 @@ def generateFireStationMap(saveMap, filePath):
         fig.write_image(
             filePath + "/fireTowerMap.png"
         )  # Uses kaleido (pip install -U kaleido)
-
-
-# Generate a text file containing data on the optimized placements of the towers
-def generateText(filePath):
-
-    # Fake data
-    data = [
-        {"City": "Freddy", "Lat": 45.9635895, "Lon": -66.643115, "Type": 1},
-        {"City": "SJ", "Lat": 45.269598, "Lon": -66.052822, "Type": 2},
-        {"City": "Moncton", "Lat": 46.088261, "Lon": -64.782986, "Type": 3},
-    ]
-
-    # Open a file with the given at the given location to write to
-    with open(filePath + "/fireTowerPlacement.txt", "w") as f:
-        # For each datapoint, write to the file
-        for i in range(len(data)):
-            f.write(
-                "City: "
-                + data[i]["City"]
-                + ", Type "
-                + str(data[i]["Type"])
-                + "\n\t"
-                + "Latitude: "
-                + str(data[i]["Lat"])
-                + "\n\t"
-                + "Longitude: "
-                + str(data[i]["Lon"])
-                + "\n"
-            )
