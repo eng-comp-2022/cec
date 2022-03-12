@@ -26,5 +26,5 @@ for i in range(width):
         lat += eps
         lon = top_left_lon
         
-with open("/Users/gregkean/Desktop/EngComp/cec/data/zoneData.json", "w") as f:
+with open("zoneData.json", "w") as f:
         json.dump(json_data, f)
