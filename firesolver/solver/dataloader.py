@@ -27,7 +27,6 @@ def load_csv():
         "average_foliage_density",
         "average_predic_temp",
         "average_rainfall",
-        "map_water",
         "unit_arson_report",
         "unit_camping_traffic",
         "unit_firework_sales",
