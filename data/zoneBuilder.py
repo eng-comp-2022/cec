@@ -7,10 +7,10 @@
 
 import json
 
-top_left_lat = -67.66776684614666
-top_left_lon = 47.74668297874867
+top_left_lon = -67.66776684614666
+top_left_lat = 47.74668297874867
 eps = 0.01125514978108399
-eps2 = 0.0079
+eps2 = 0.00079
 width = 246
 height = 304
 
@@ -23,9 +23,9 @@ for i in range(width):
         for j in range(height):
             json_data["features"].append({"type": "Feature", "properties": {"AREA": 1}, "geometry": {"type": "Polygon", "coordinates": [[[lat, lon], [lat, lon-eps], [lat+eps, lon-eps], [lat+eps, lon]]]}, "id": str(id)})
             id += 1
-            lon -= eps2
-        lat += eps
-        lon = top_left_lon
+            lat -= eps2
+        lon += eps
+        lat = top_left_lat
         
 with open("zoneData.json", "w") as f:
         json.dump(json_data, f)
