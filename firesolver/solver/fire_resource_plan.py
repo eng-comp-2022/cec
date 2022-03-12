@@ -6,6 +6,11 @@ from solver import dataloader
 
 
 def get_distance(x1, x2, y1, y2):
+    """
+    get_distance: helper functions to get distance between 2 points in space
+    :param x1, x2, y1, y2: coordinates of 2 points 
+    :return: c the scalar distance
+    """ 
     xs = x1 - x2
     ys = y1 - y2
     x = abs(xs)
@@ -14,10 +19,17 @@ def get_distance(x1, x2, y1, y2):
     c = math.sqrt(x**2 + y**2)
     return c
 
-fire_stat = ['A', 'C', 'B']
+
+# helper array for the type of stations
+fire_stat = ['A', 'C', 'B'] 
 
 def get_indexes_of_fire_stations():
-    fire_stations = dataloader.get_data("Fire_Station_Locations")
+    """
+    get_indexes_of_fire_stations: this function gets the indexes of the fire stations.
+    The indexes are used as the coordinate locations.
+    :return: a 2d array of the coordinates of the fire stations   
+    """ 
+    fire_vstations = dataloader.get_data("Fire_Station_Locations")
     i = 0
     result =[]
     for i in range(len(fire_stations)):
@@ -30,7 +42,14 @@ def get_indexes_of_fire_stations():
 
 
 def get_indexes_of_key_sites():
+    """
+    get_indexe_of_key_sites: this function gets the indexes of the key sites.
+    The indexes are used as the coordinate locations.
+    :return: a 2d array of the coordinates of the key sites.   
+     """ 
+    
     key_sites = dataloader.get_data("Key_Site_Locations")
+
     i = 0
     result =[]
     for i in range(len(key_sites)):
@@ -43,6 +62,11 @@ def get_indexes_of_key_sites():
 
 
 def get_indexes_of_water_sites():
+    """
+    get_indexes_of_water_sites: this function gets the indexes of the water sites.
+    The indexes are used as the coordinate locations.
+    :return: a 2d array of the coordinates of the water sites.   
+    """ 
     water_site = dataloader.get_data("map_water")
     i = 0
     result =[]
@@ -55,6 +79,13 @@ def get_indexes_of_water_sites():
     return result
 
 def assign_firestation_to_key_locs():
+    """
+    assign_firestation_to_key_locs: this funciton is used to assign the closest fire stations to 
+    the key site locations. This iterates through the fire stations and assigns the closest fire stations
+    to the key site locations. This is vizualized on our map as part of the stage 3 deleiverable 
+    The indexes are used as the coordinate locations.
+    :return: a dictionary of the key site locations as the keys and then list of the BEST fire staions for that site based on proximity.   
+     """ 
     key_sites = get_indexes_of_key_sites()
     fire_stations = get_indexes_of_fire_stations()
     
@@ -88,6 +119,8 @@ def assign_firestation_to_key_locs():
                 station_list.append(entry["station_id"])
     return key_site_list_station
 
+#  returns a specific 
 def get_station_for_site(site_number):
+    
     station_site_map = assign_firestation_to_key_locs()
     return station_site_map[site_number]
