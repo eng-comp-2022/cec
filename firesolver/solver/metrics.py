@@ -8,6 +8,8 @@ import pandas as pd
 
 
 def grid_metrics():
+    water_map = dataloader.get_data("map_water")
+
     rain_data = dataloader.get_data("average_rainfall")
     foliage_data = dataloader.get_norm_data("average_foliage_density")
     temp = dataloader.get_norm_data("average_predic_temp")
@@ -18,6 +20,14 @@ def grid_metrics():
     DMC = dataloader.normalize_data(duff_moisture_content(rain_data))
     DC = dataloader.normalize_data(drought_code(rain_data))
 
+    # consider values only on land
+    foliage_data = np.multiply(foliage_data, water_map)
+    temp = np.multiply(temp, water_map)
+    camping_traffic = np.multiply(camping_traffic, water_map)
+    firework_sales = np.multiply(firework_sales, water_map)
+    DMC[water_map == 1] = 0
+    DC[water_map == 1] = 0
+
     metric = (
         np.multiply(foliage_data, 0.20)
         + np.multiply(temp, 0.28)
@@ -27,33 +37,37 @@ def grid_metrics():
         + np.multiply(DMC, 0.20)
         + np.multiply(DC, 0.15)
     )
-    return metric
+
+    return dataloader.get_data("average_pop_density")
+    # return water_map  # metric
 
 
 def displayable_metrics():
     grid_data = grid_metrics()
     rows, cols = grid_data.shape
 
-    def display_idx(row_idx, col_idx):
-        return row_idx + rows * col_idx
+    def display_id(row_idx, col_idx):
+        return col_idx * rows + row_idx
 
-    display_idxs = []
-    for row in range(0, rows):
-        for col in range(0, cols):
-            display_idxs.append(display_idx(row, col))
+    display_ids = []
+    display_data = []
+    for col in range(0, cols):
+        for row in range(0, rows):
+            display_ids.append(display_id(row, col))
+            display_data.append(grid_data[col, row])
 
-    t_grid_data = np.transpose(grid_data)
-
-    display_metrics = {"id": display_idxs, "risk": t_grid_data.flatten()}
+    display_metrics = {"id": display_ids, "risk": display_data}
 
     return pd.DataFrame.from_dict(display_metrics)
 
 
+# make sure to ignore the water areas when calculating significance
 def significant_areas(data, z_threshold=1):
     sample_mean = np.mean(data)
     sample_std = np.std(data)
 
     def z_score(sample):
+
         return (sample - sample_mean) / sample_std
 
     transform = np.vectorize(z_score)
@@ -79,6 +93,8 @@ def duff_moisture_content(ave_rainfall):
 
 def drought_code(ave_rainfall):
     def drought_code_element(element):
+        if element == 0:
+            return 0
         Pe = 0.92 * element
         Q = 3.937 * Pe
         if Q == 0:
