@@ -38,36 +38,32 @@ def grid_metrics():
         + np.multiply(DC, 0.15)
     )
 
-    return dataloader.get_data("average_pop_density")
-    # return water_map  # metric
+    return metric
 
 
 def displayable_metrics():
     grid_data = grid_metrics()
     rows, cols = grid_data.shape
 
-    def display_id(row_idx, col_idx):
-        return col_idx * rows + row_idx
-
     display_ids = []
     display_data = []
-    for col in range(0, cols):
-        for row in range(0, rows):
-            display_ids.append(display_id(row, col))
-            display_data.append(grid_data[col, row])
+    display_id = 0
+    for col in range(cols):
+        for row in range(rows):
+            display_data.append(grid_data[row, col])
+            display_ids.append(display_id)
+            display_id += 1
 
     display_metrics = {"id": display_ids, "risk": display_data}
-
     return pd.DataFrame.from_dict(display_metrics)
 
 
 # make sure to ignore the water areas when calculating significance
-def significant_areas(data, z_threshold=1):
+def significant_areas(data, z_threshold=2):
     sample_mean = np.mean(data)
     sample_std = np.std(data)
 
     def z_score(sample):
-
         return (sample - sample_mean) / sample_std
 
     transform = np.vectorize(z_score)
@@ -89,6 +85,22 @@ def duff_moisture_content(ave_rainfall):
 
     transform = np.vectorize(moisture_content_element)
     return transform(ave_rainfall)
+
+
+def display_significant_areas(data):
+    rows, cols = data.shape
+
+    display_ids = []
+    display_data = []
+    display_id = 0
+    for col in range(cols):
+        for row in range(rows):
+            display_data.append(data[row, col])
+            display_ids.append(display_id)
+            display_id += 1
+
+    display_significants = {"id": display_ids, "risk": display_data}
+    return pd.DataFrame.from_dict(display_significants)
 
 
 def drought_code(ave_rainfall):
@@ -125,4 +137,5 @@ if __name__ == "__main__":
     # print(s[s == True].size)
     # print(s.size)
     # print(grid_metrics())
-    print(displayable_metrics())
+    # print(displayable_metrics())
+    pass
