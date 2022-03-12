@@ -10,10 +10,17 @@ def generateStationMap(saveMap, filePath):
     # Fake Data to show form it should take, as well as for building/testing
     # Format is City, Lat, Lon, Type
     data = [
-        {"City": "Freddy", "Lat": 45.9635895, "Lon": -66.643115, "Type": 1},
-        {"City": "SJ", "Lat": 45.269598, "Lon": -66.052822, "Type": 2},
-        #   {"City": "Moncton", "Lat": 46.088261, "Lon": -64.782986, "Type": 3},
-        #  {"City": "Center", "Lat": 46.652598, "Lon": -66.170557, "Type": 3}
+        {"City": "Saint John", "Lat": 45.269598, "Lon": -66.052822, "Type": 3},
+        {"City": "Moncton", "Lat": 46.088879, "Lon": -64.775818, "Type": 3},
+        {"City": "Fredericton", "Lat": 45.959221, "Lon": -66.640350, "Type": 3},
+        {"City": "Miramichi", "Lat": 47.027908, "Lon": -65.469482, "Type": 2},
+        {"City": "Bathurst", "Lat": 47.61922, "Lon": -65.66046, "Type": 2},
+        {"City": "Mactaquac", "Lat": 45.95429, "Lon": -66.88959, "Type": 1},
+        {"City": "Mount Carelton", "Lat": 47.40786, "Lon": -66.91740, "Type": 1},
+        {"City": "Parlee Beach", "Lat": 46.23998, "Lon": -64.51020, "Type": 2},
+        {"City": "Kouchibouguac", "Lat": 46.79534, "Lon": -65.05671, "Type": 2},
+        {"City": "Fundy", "Lat": 45.61394, "Lon": -65.03284, "Type": 3},
+        {"City": "Gagetown", "Lat": 45.78214, "Lon": -66.14849, "Type": 2}
     ]
 
     # Set the colours for each tower type (Type 1 is purple, Type 2 is red, Type 3 is orange)
@@ -21,7 +28,7 @@ def generateStationMap(saveMap, filePath):
     # Set the tower types to be used and iterated through
     types = {1: "Type 1", 2: "Type 2", 3: "Type 3"}
     # Set the radius for each tower type
-    diam = {1: 88.55, 2: 88.55, 3: 110}
+    diam = {1: 80, 2: 120, 3: 200}
 
     # Create the base figure to be edited
     fig = go.Figure()
@@ -45,7 +52,7 @@ def generateStationMap(saveMap, filePath):
                     size=diam[towerType],  # Size to scale
                     color=colors[towerType - 1],
                     line_width=0,
-                    opacity=0.80,
+                    opacity=0.5,
                 ),
             )
         )
