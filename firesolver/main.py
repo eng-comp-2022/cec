@@ -96,15 +96,15 @@ if __name__ == "__main__":
 
         # Generate the map without saving it
         if event == "-GENERATE_MAP-":
-            generateMap(False, "")
+            map.generateMap(False, "")
 
         # Generate the map and save it without showing it
         if event == "-SAVE_MAP-":
-            generateMap(True, values["-SAVE_PATH-"])
+            map.generateMap(True, values["-SAVE_PATH-"])
 
         # Save the generated data to a .txt file
         if event == "-SAVE_TXT-":
-            generateText(values["-SAVE_PATH-"])
+            map.generateText(values["-SAVE_PATH-"])
 
     # Finish up by removing from the screen
     window.close()
