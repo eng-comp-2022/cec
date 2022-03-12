@@ -5,7 +5,7 @@ import sys
 
 _data_frame_dict = {}
 _norm_data_frame_dict = {}
-
+#  all csv names
 _csv_names = [
     "average_foliage_density",
     "average_pop_density",
@@ -21,6 +21,7 @@ _csv_names = [
 
 
 # names that make sense to normalize
+# for example we do not include the map water data
 _normalize_names = [
     "average_foliage_density",
     "average_predic_temp",
@@ -32,6 +33,10 @@ _normalize_names = [
 
 
 def load_csv():
+    """
+    load_csv: function to load all csv files. We also normalize the data being ingested right off the bat.
+    storing the results as globals
+    """ 
     # read files, tracking smallest dimensions
     smallest_rows = sys.maxsize
     smallest_cols = sys.maxsize
@@ -58,12 +63,23 @@ def load_csv():
 
 
 def normalize_data(data):
+    """
+    normalize_data: helper fucntion to normalize data.
+    :param data: takes in a M x N matrix of raw data from the provided csv
+   
+    :return: the statistically significant areas based on the z_threshold
+    """ 
     # normalize respective data between 0 and 1
     norm_factor = 1 / np.amax(data, where=~np.isnan(data), initial=0)
     return np.multiply(data, norm_factor)
 
 
 def get_data(data_name: str):
+    """
+    get_data: helper fucntion to laod the data.
+    :param data: takes in a M x N matrix of raw data from the provided csv
+    :return: loaded data
+    """ 
     if len(_data_frame_dict) == 0:
         load_csv()
 
