@@ -6,6 +6,8 @@ import pandas as pd
 
 # Generate the map of NB using a csv created by the optimization
 def generateStationMap(saveMap, filePath, location):
+    
+    
 
     # Fake Data to show form it should take, as well as for building/testing
     # Format is City, Lat, Lon, Type
@@ -22,13 +24,20 @@ def generateStationMap(saveMap, filePath, location):
         {"City": "Fundy", "Lat": 45.61394, "Lon": -65.03284, "Type": 3},
         {"City": "Gagetown", "Lat": 45.78214, "Lon": -66.14849, "Type": 2}
     ]
+    
+    #Initialize station location, and epsilons needed to convert grid coordinates to lats and longs
+    stationData = {}
+    top_left_lon = -67.779559
+    top_left_lat = 47.846172
+    epsLat = 0.009
+    epsLon = 0.0132
 
     # Set the colours for each tower type (Type A is yellow, Type B is red, Type C is black)
-    colors = ["rgb(0, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 255, 0)"]
+    colors = ["rgb(255, 255, 0)", "rgb(255, 0, 0)", "rgb(0, 0, 0)"]
     # Set the tower types to be used and iterated through
     types = {1: "Type A: Water Plane", 2: "Type B: Fire Truck", 3: "Type C: ATV"}
     # Set the radius for each tower type
-    diam = {1: 80, 2: 120, 3: 200}
+    diam = {1: 200, 2: 120, 3: 80}
 
     # Create the base figure to be edited
     fig = go.Figure()
@@ -36,8 +45,8 @@ def generateStationMap(saveMap, filePath, location):
     #Disable the display bar
     config = {"displayModeBar": False}
     
-    #Create a variable to store which location was wanted
-    loc = -1
+    #Initialize the data
+    data = {}
     
     #Check which location is attempting to be viewed
     if(location == "Saint John"):
@@ -63,7 +72,6 @@ def generateStationMap(saveMap, filePath, location):
     if(location == "Gagetown"):
         loc = 10
     
-
     # Iterate through the data list to
     for i in range(len(data)):
         tempLon = data[i]["Lon"]
