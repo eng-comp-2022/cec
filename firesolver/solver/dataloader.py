@@ -4,6 +4,7 @@ import numpy as np
 import sys
 
 _data_frame_dict = {}
+_norm_data_frame_dict = {}
 
 _csv_names = [
     "average_foliage_density",
@@ -13,6 +14,17 @@ _csv_names = [
     "Fire_Station_Locations",
     "Key_Site_Locations",
     "map_water",
+    "unit_arson_report",
+    "unit_camping_traffic",
+    "unit_firework_sales",
+]
+
+
+# names that make sense to normalize
+_normalize_names = [
+    "average_foliage_density",
+    "average_predic_temp",
+    "average_rainfall",
     "unit_arson_report",
     "unit_camping_traffic",
     "unit_firework_sales",
@@ -39,18 +51,15 @@ def load_csv():
             _data_frame_dict[name], (smallest_rows, smallest_cols)
         )
 
+    # store normalized versions of data
+    for name in _normalize_names:
+        _norm_data_frame_dict[name] = normalize_data(_data_frame_dict[name])
+
+
+def normalize_data(data):
     # normalize respective data between 0 and 1
-    normalize_names = [
-        "average_foliage_density",
-        "average_predic_temp",
-        "average_rainfall",
-        "unit_arson_report",
-        "unit_camping_traffic",
-        "unit_firework_sales",
-    ]
-    for name in normalize_names:
-        norm_factor = 1 / np.amax(_data_frame_dict["average_rainfall"])
-        _data_frame_dict[name] = np.multiply(_data_frame_dict[name], norm_factor)
+    norm_factor = 1 / np.amax(data, where=~np.isnan(data), initial=0)
+    return np.multiply(data, norm_factor)
 
 
 def get_data(data_name: str):
@@ -58,6 +67,13 @@ def get_data(data_name: str):
         load_csv()
 
     return _data_frame_dict[data_name]
+
+
+def get_norm_data(data_name: str):
+    if len(_norm_data_frame_dict) == 0:
+        load_csv()
+
+    return _norm_data_frame_dict[data_name]
 
 
 if __name__ == "__main__":
