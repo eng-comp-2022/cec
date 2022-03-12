@@ -7,7 +7,7 @@ import plotly.express as px
 def generateRiskMap(saveMap, filePath):
     
     #Open and load the generated json file containing the longitudes and latitudes for each zone
-    with urlopen('https://raw.githubusercontent.com/eng-comp-2022/cec/main/data/zoneData.json') as response:
+    with urlopen('/Users/gregkean/Desktop/EngComp/cec/data') as response:
         zoneData = json.load(response)
 
     #Open and load the csv containing the generated risk values for each zones
