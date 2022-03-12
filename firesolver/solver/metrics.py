@@ -1,9 +1,11 @@
-import dataloader
+from solver import dataloader
 import numpy as np
 from statsmodels.stats.weightstats import ztest as ztest
 import math
-import sys
-import fire_resource_plan
+# import sys
+# import fire_resource_plan
+import pandas as pd
+
 # np.set_printoptions(threshold=sys.maxsize)
 
 
@@ -15,6 +17,8 @@ def grid_metrics():
 
     :return: M x N grid of probabilities
     """ 
+    water_map = dataloader.get_data("map_water")
+
     rain_data = dataloader.get_data("average_rainfall")
     foliage_data = dataloader.get_norm_data("average_foliage_density")
     temp = dataloader.get_norm_data("average_predic_temp")
@@ -25,6 +29,14 @@ def grid_metrics():
     DMC = dataloader.normalize_data(duff_moisture_content(rain_data))
     DC = dataloader.normalize_data(drought_code(rain_data))
 
+    # consider values only on land
+    foliage_data = np.multiply(foliage_data, water_map)
+    temp = np.multiply(temp, water_map)
+    camping_traffic = np.multiply(camping_traffic, water_map)
+    firework_sales = np.multiply(firework_sales, water_map)
+    DMC[water_map == 1] = 0
+    DC[water_map == 1] = 0
+
     metric = (
         np.multiply(foliage_data, 0.20)
         + np.multiply(temp, 0.28)
@@ -34,9 +46,27 @@ def grid_metrics():
         + np.multiply(DMC, 0.20)
         + np.multiply(DC, 0.15)
     )
-    return metric
+
+    return dataloader.normalize_data(metric)
 
 
+def displayable_data(grid_data):
+    rows, cols = grid_data.shape
+
+    display_ids = []
+    display_data = []
+    display_id = 0
+    for col in range(cols):
+        for row in range(rows):
+            display_data.append(grid_data[row, col])
+            display_ids.append(display_id)
+            display_id += 1
+
+    display_metrics = {"id": display_ids, "risk": display_data}
+    return pd.DataFrame.from_dict(display_metrics)
+
+
+# make sure to ignore the water areas when calculating significance
 def significant_areas(data, z_threshold=1):
     """
     significant areas: function to determine the sig.
@@ -98,6 +128,8 @@ def drought_code(ave_rainfall):
     :return: the drought code index for the specific area 
     """ 
     def drought_code_element(element):
+        if element == 0:
+            return 0
         Pe = 0.92 * element
         Q = 3.937 * Pe
         if Q == 0:
@@ -124,6 +156,9 @@ if __name__ == "__main__":
     # print("SE:LRRRRRRRRJJJJj")
     # print(drought_code(rain_data()))
     # print(duff_moisture_content(rain_data()))
-    s = significant_areas(grid_metrics())
-    print(s[s == True].size)
-    print(s.size)
+    # s = significant_areas(grid_metrics())
+    # print(s[s == True].size)
+    # print(s.size)
+    # print(grid_metrics())
+    # print(displayable_metrics())
+    pass
