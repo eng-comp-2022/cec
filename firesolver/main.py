@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 from gui.gui import create_main_layout
-from solver import bubbleMap
-from solver import chloroplethMap
+from maps import bubbleMap
+from maps import chloroplethMap
 
 
 if __name__ == "__main__":
@@ -97,19 +97,19 @@ if __name__ == "__main__":
 
         # Generate the map without saving it
         if event == "-GENERATE_MAP-":
-            bubbleMap.generateMap(False, "")
+            bubbleMap.generateFireStationMap(False, "")
 
         # Generate the map and save it without showing it
         if event == "-SAVE_MAP-":
-            bubbleMap.generateMap(True, values["-SAVE_PATH-"])
+            bubbleMap.generateFireStationMap(True, values["-SAVE_PATH-"])
             
         # Generate the map without saving it
         if event == "-GENERATE_RISK-":
-            chloroplethMap.generateMap(False, "")
+            chloroplethMap.generateRiskMap(False, "")
 
         # Generate the map and save it without showing it
         if event == "-SAVE_RISK-":
-            chloroplethMap.generateMap(True, values["-SAVE_PATH-"])
+            chloroplethMap.generateRiskMap(True, values["-SAVE_PATH-"])
 
         # Save the generated data to a .txt file
         if event == "-SAVE_TXT-":
