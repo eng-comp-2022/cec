@@ -10,7 +10,7 @@ import json
 top_left_lon = 47.74668297874867
 top_left_lat = -67.66776684614666
 eps = 0.01125514978108399
-eps2 = 0.00079
+eps2 = 0.0079
 width = 246
 height = 304
 
@@ -27,5 +27,5 @@ for i in range(width):
         lon += eps
         lat = top_left_lat
         
-with open("/Users/gregkean/Desktop/EngComp/cec/data/zoneData.json", "w") as f:
+with open("zoneData.json", "w") as f:
         json.dump(json_data, f)
