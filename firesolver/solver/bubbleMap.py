@@ -26,29 +26,29 @@ def generateMap(saveMap, filePath):
     # Create the base figure to be edited
     fig = go.Figure()
 
-    config = {"displayModeBar": False}
+    # config = {"displayModeBar": False}
 
-    # Iterate through the data list to
-    for i in range(len(data)):
-        tempLon = data[i]["Lon"]
-        tempLat = data[i]["Lat"]
-        towerType = data[i]["Type"]
-        fig.add_trace(
-            go.Scattergeo(
-                # Pull all the necessary data
-                text=data[i]["City"],
-                name=data[i]["City"] + ", Type " + str(towerType),
-                lat=[tempLat],
-                lon=[tempLon],
-                marker=dict(
-                    sizemode="diameter",  # THIS MEANS THE BUBBLES USE DIAMETER, KEEP IN MIND DURING CALCULATION
-                    size=diam[towerType],  # Size to scale
-                    color=colors[towerType - 1],
-                    line_width=0,
-                    opacity=0.80,
-                ),
-            )
-        )
+    # # Iterate through the data list to
+    # for i in range(len(data)):
+    #     tempLon = data[i]["Lon"]
+    #     tempLat = data[i]["Lat"]
+    #     towerType = data[i]["Type"]
+    #     fig.add_trace(
+    #         go.Scattergeo(
+    #             # Pull all the necessary data
+    #             text=data[i]["City"],
+    #             name=data[i]["City"] + ", Type " + str(towerType),
+    #             lat=[tempLat],
+    #             lon=[tempLon],
+    #             marker=dict(
+    #                 sizemode="diameter",  # THIS MEANS THE BUBBLES USE DIAMETER, KEEP IN MIND DURING CALCULATION
+    #                 size=diam[towerType],  # Size to scale
+    #                 color=colors[towerType - 1],
+    #                 line_width=0,
+    #                 opacity=0.80,
+    #             ),
+    #         )
+    #     )
 
     # Set the layout of the map now that we have data generated
     fig.update_layout(
