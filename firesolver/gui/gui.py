@@ -25,7 +25,7 @@ def create_main_layout():
         #Buttons to generate and save the data
         [
             sg.Button("View Metric Heatmap", key="-GENERATE_METRIC_MAP-", size=(26, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
-            sg.Button("Save Metric Heatmap as PNG", key="-SAVE_METRIC_MAP-", size=(30, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
+            sg.Button("Save Metric Heatmap as PNG", key="-SAVE_METRIC_MAP-", size=(30, 1), font=("Helvetica", 16), disabled=True, disabled_button_color='grey'),
         ],
         #Division
         [
@@ -43,7 +43,7 @@ def create_main_layout():
         #Buttons to generate and save the data
         [
             sg.Button("View At-Risk Area Heatmap", key="-GENERATE_RISK_MAP-", size=(26, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
-            sg.Button("Save At-Risk Heatmap as PNG", key="-SAVE_RISK_MAP-", size=(30, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
+            sg.Button("Save At-Risk Heatmap as PNG", key="-SAVE_RISK_MAP-", size=(30, 1), font=("Helvetica", 16), disabled=True, disabled_button_color='grey'),
         ],
         #Division
         [
@@ -58,8 +58,13 @@ def create_main_layout():
         [
             sg.Text(" ")
         ],
+        #Text to tell the user to select their desired city for viewing for Stage 3
+        [
+            sg.Text("Select Key Loaction to View: ", font=("Helvetica", 16))
+        ],
         #Buttons to generate and save the data
         [
+            sg.Combo(['Saint John','Moncton','Fredericton', 'Miramichi','Bathurst','Mactaquac','Mount Carleton','Parlee Beach', 'Kouchibouguac', 'Fundy', 'Gagetown'],font=("Helvetica", 16), size=(30, 1), default_value='Saint John',key='-KEY_COMBO-'),
             sg.Button("View Fire Station Area Bubble Map", key="-GENERATE_STATION_MAP-", size=(26, 1), font=("Helvetica", 16), disabled=True, disabled_button_color='grey'),
             sg.Button("Save Fire Station Bubble Map as PNG", key="-SAVE_STATION_MAP-", size=(30, 1), font=("Helvetica", 16), disabled=True, disabled_button_color='grey'),
         ],

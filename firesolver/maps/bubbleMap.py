@@ -5,7 +5,7 @@ import pandas as pd
 # ##############################
 
 # Generate the map of NB using a csv created by the optimization
-def generateStationMap(saveMap, filePath):
+def generateStationMap(saveMap, filePath, location):
 
     # Fake Data to show form it should take, as well as for building/testing
     # Format is City, Lat, Lon, Type
@@ -33,7 +33,36 @@ def generateStationMap(saveMap, filePath):
     # Create the base figure to be edited
     fig = go.Figure()
 
+    #Disable the display bar
     config = {"displayModeBar": False}
+    
+    #Create a variable to store which location was wanted
+    loc = -1
+    
+    #Check which location is attempting to be viewed
+    if(location == "Saint John"):
+        loc = 0
+    if(location == "Moncton"):
+        loc = 1
+    if(location == "Fredericton"):
+        loc = 2
+    if(location == "Miramichi"):
+        loc = 3
+    if(location == "Bathurst"):
+        loc = 4
+    if(location == "Mactaquac"):
+        loc = 5
+    if(location == "Mount Carleton"):
+        loc = 6
+    if(location == "Parlee Beach"):
+        loc = 7
+    if(location == "Kouchibouguac"):
+        loc = 8
+    if(location == "Fundy"):
+        loc = 9
+    if(location == "Gagetown"):
+        loc = 10
+    
 
     # Iterate through the data list to
     for i in range(len(data)):
