@@ -75,5 +75,5 @@ def generateRiskMap(saveMap, filePath):
     # If this function was activated by the 'Save Map' button, save it without making the map pop up in the browser
     if saveMap == True:
         fig.write_image(
-            filePath + "/MetricHeatmap.png"
+            filePath + "/RiskHeatmap.png"
         )  # Uses kaleido (pip install -U kaleido)
