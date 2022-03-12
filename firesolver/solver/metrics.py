@@ -63,6 +63,8 @@ def duff_moisture_content(ave_rainfall):
     content of loosely compacted organic layers of moderate depth.
     This code gives an indication of fuel consumption in moderate duff layers and medium-size woody material.
     ref: https://cwfis.cfs.nrcan.gc.ca/background/summary/fwi
+
+    
     :param ave_rainfall: the average rainfall provided
     :return: the duff moisture index for the specific location
     """ 
