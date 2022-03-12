@@ -4,7 +4,7 @@ from statsmodels.stats.weightstats import ztest as ztest
 import math
 import sys
 
-np.set_printoptions(threshold=sys.maxsize)
+# np.set_printoptions(threshold=sys.maxsize)
 
 
 def grid_metrics():
@@ -30,29 +30,15 @@ def grid_metrics():
     return metric
 
 
-def significant_areas(data, z_threshold=3):
+def significant_areas(data, z_threshold=1):
     sample_mean = np.mean(data)
     sample_std = np.std(data)
-    standard_error = sample_std / math.sqrt(data.size)
 
     def z_score(sample):
-        return (sample - sample_mean) / standard_error
+        return (sample - sample_mean) / sample_std
 
     transform = np.vectorize(z_score)
-    sigs = transform(data)
-    print(sigs)
-    return sigs
-    # print(sample_mean, sample_std, standard_error)
-    # original_shape = data.shape
-    # print("original shape", original_shape)
-    # sample_data = data.reshape(data.size, 1)
-    # _, p_vals = ztest(sample_data.tolist(), value=np.mean(data))
-
-    # print("pvals: ", p_vals)
-    # p_vals = p_vals.reshape(original_shape)
-    # mask = p_vals >= alpha
-    # print("new shape", mask.shape)
-    # return mask
+    return transform(data) > z_threshold
 
 
 def duff_moisture_content(ave_rainfall):
@@ -95,7 +81,7 @@ def drought_code(ave_rainfall):
 if __name__ == "__main__":
     # print(np.mean(grid_metrics()))
     # print(significant_areas(grid_metrics()))
-    print("grid metrics:", grid_metrics())
+    # print("grid metrics:", grid_metrics())
     # print(rain_data())
     # print("SE:LRRRRRRRRJJJJj")
     # print(drought_code(rain_data()))

@@ -54,9 +54,8 @@ def get_indexes_of_water_sites():
     
     return result
 
-def assign_firestation_to_key_loc():
+def assign_firestation_to_key_locs():
     key_sites = get_indexes_of_key_sites()
-
     fire_stations = get_indexes_of_fire_stations()
     
     result = []
