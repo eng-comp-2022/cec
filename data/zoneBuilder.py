@@ -24,7 +24,7 @@ for i in range(width):
             id += 1
             lon -= eps
         lat += eps
-        lon = top_left_lon
+        lon = top_left_lat
         
 with open("/Users/gregkean/Desktop/EngComp/cec/data/zoneData.json", "w") as f:
         json.dump(json_data, f)
