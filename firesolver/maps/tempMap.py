@@ -2,12 +2,12 @@
 import plotly.express as px
 import json
 import pandas as pd
-df = pd.read_csv("metric_data_template.csv",
+df = pd.read_csv("/Users/gregkean/Desktop/EngComp/cec/data/metric_output.csv",
                    dtype={"fips": str})
 
    
 # Opening JSON file
-f = open('geodata.json')
+f = open("/Users/gregkean/Desktop/EngComp/cec/data/zoneData.json")
    
 # returns JSON object as 
 # a dictionary

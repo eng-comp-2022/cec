@@ -7,11 +7,11 @@ import plotly.express as px
 def generateRiskMap(saveMap, filePath):
     
     #Open and load the generated json file containing the longitudes and latitudes for each zone
-    with urlopen('/Users/gregkean/Desktop/EngComp/cec/data') as response:
+    with urlopen('https://raw.githubusercontent.com/eng-comp-2022/cec/main/data/zoneData.json') as response:
         zoneData = json.load(response)
 
     #Open and load the csv containing the generated risk values for each zones
-    riskData = pd.read_csv("https://raw.githubusercontent.com/eng-comp-2022/cec/main/data/metric_output.csv",
+    riskData = pd.read_csv('https://raw.githubusercontent.com/eng-comp-2022/cec/main/data/metric_output.csv',
                     dtype={"fips": str})
 
     #Create the choropleth map using the data loaded above
