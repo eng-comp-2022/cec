@@ -12,10 +12,6 @@ if __name__ == "__main__":
     # Create the window
     window = sg.Window("Fire Tower Positioning System", layout)
 
-    # Flags to check if the user input is valid
-    validBudget = False
-    validData = False
-
     # Display and interact with the Window using an Event Loop
     while True:
         event, values = window.read(timeout=250)
@@ -33,14 +29,20 @@ if __name__ == "__main__":
         if event == "-SAVE_METRIC_MAP-":
             chloroplethMap.generateMetricMap(True, values["-SAVE_PATH-"])
             
+            
         ## STAGE TWO ##
-        # If user wants to generate the stage two map, generate the map without saving it
+        # If user wants to generate the stage two map, generate the map without saving it. Also, enable stage 3
         if event == "-GENERATE_RISK_MAP-":
             chloroplethMap.generateRiskMap(False, "")
+            window['-GENERATE_STATION_MAP-'].update(disabled=False)
+            window['-SAVE_STATION_MAP-'].update(disabled=False)
 
-        # If user wants to save the stage two map, save the map without having it pop up
+        # If user wants to save the stage two map, save the map without having it pop up. Also, enable stage 3
         if event == "-SAVE_RISK_MAP-":
             chloroplethMap.generateRiskMap(True, values["-SAVE_PATH-"])
+            window['-GENERATE_STATION_MAP-'].update(disabled=False)
+            window['-SAVE_STATION_MAP-'].update(disabled=False)
+
 
         ## STAGE THREE ##
         # If user wants to generate the stage two map, generate the map without saving it

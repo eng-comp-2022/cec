@@ -23,10 +23,10 @@ def generateStationMap(saveMap, filePath):
         {"City": "Gagetown", "Lat": 45.78214, "Lon": -66.14849, "Type": 2}
     ]
 
-    # Set the colours for each tower type (Type 1 is purple, Type 2 is red, Type 3 is orange)
-    colors = ["rgb(169, 19, 214)", "rgb(214, 19, 52)", "rgb(214, 139, 19)"]
+    # Set the colours for each tower type (Type A is yellow, Type B is red, Type C is black)
+    colors = ["rgb(0, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 255, 0)"]
     # Set the tower types to be used and iterated through
-    types = {1: "Type 1", 2: "Type 2", 3: "Type 3"}
+    types = {1: "Type A: Water Plane", 2: "Type B: Fire Truck", 3: "Type C: ATV"}
     # Set the radius for each tower type
     diam = {1: 80, 2: 120, 3: 200}
 
