@@ -3,7 +3,7 @@ import plotly.express as px
 
 import json
 import pandas as pd
-df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
+df = pd.read_csv("metric_data_template.csv",
                    dtype={"fips": str})
 
    
@@ -22,5 +22,8 @@ fig = px.choropleth_mapbox(df, geojson=json_data, locations='fips', color='unemp
                            opacity=0.5,
                            labels={'unemp':'unemployment rate'}
                           )
+fig.update_traces(marker_line_width=0)
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 fig.show()
+
+
