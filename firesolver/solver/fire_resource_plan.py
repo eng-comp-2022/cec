@@ -89,7 +89,8 @@ def assign_firestation_to_key_locs():
     return key_site_list_station
 
 def get_station_for_site(site_number):
-    station_site_map = assign_firestation_to_key_loc()
+    station_site_map = assign_firestation_to_key_locs()
     return station_site_map[site_number]
  
 
+print(assign_firestation_to_key_locs()) 
