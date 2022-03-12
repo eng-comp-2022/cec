@@ -7,8 +7,10 @@ def create_main_layout():
     #This contains the three buttons to view and save the map, as well as save the txt. This is seperate to allow for right-justification
     map_column = [
         [
-            sg.Button("View Generated Locations", key="-GENERATE_MAP-", size=(15, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
-            sg.Button("Save Generated Locations as PNG", key="-SAVE_MAP-", size=(15, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
+            sg.Button("View Generated Firestation Locations", key="-GENERATE_MAP-", size=(15, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
+            sg.Button("Save Generated Locations Firestation as PNG", key="-SAVE_MAP-", size=(15, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
+            sg.Button("View At-Risk Locations", key="-GENERATE_RISK-", size=(15, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
+            sg.Button("Save At-Risk Locations Firestation as PNG", key="-SAVE_RISK-", size=(15, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
             sg.Button("Save Generated Locations as TXT", key="-SAVE_TXT-", size=(15, 1), font=("Helvetica", 16), disabled=False, disabled_button_color='grey'),
         ],
     ]
