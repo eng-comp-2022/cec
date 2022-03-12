@@ -1,6 +1,5 @@
 from solver import dataloader
 import numpy as np
-from statsmodels.stats.weightstats import ztest as ztest
 import math
 # import sys
 # import fire_resource_plan

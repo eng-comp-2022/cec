@@ -1,8 +1,8 @@
 from cmath import inf
 import math
 from webbrowser import get
-import dataloader
 import numpy as np
+from solver import dataloader
 
 
 def get_distance(x1, x2, y1, y2):
@@ -124,6 +124,3 @@ def get_station_for_site(site_number):
     
     station_site_map = assign_firestation_to_key_locs()
     return station_site_map[site_number]
- 
-
-print(assign_firestation_to_key_locs()) 

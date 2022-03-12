@@ -1,32 +1,11 @@
 import plotly.graph_objects as go
 import pandas as pd
-
-
-# ##############################
+from solver import fire_resource_plan
 
 # Generate the map of NB using a csv created by the optimization
 def generateStationMap(saveMap, filePath, location):
     
-    
-
-    # Fake Data to show form it should take, as well as for building/testing
-    # Format is City, Lat, Lon, Type
-    data = [
-        {"City": "Saint John", "Lat": 45.269598, "Lon": -66.052822, "Type": 3},
-        {"City": "Moncton", "Lat": 46.088879, "Lon": -64.775818, "Type": 3},
-        {"City": "Fredericton", "Lat": 45.959221, "Lon": -66.640350, "Type": 3},
-        {"City": "Miramichi", "Lat": 47.027908, "Lon": -65.469482, "Type": 2},
-        {"City": "Bathurst", "Lat": 47.61922, "Lon": -65.66046, "Type": 2},
-        {"City": "Mactaquac", "Lat": 45.95429, "Lon": -66.88959, "Type": 1},
-        {"City": "Mount Carelton", "Lat": 47.40786, "Lon": -66.91740, "Type": 1},
-        {"City": "Parlee Beach", "Lat": 46.23998, "Lon": -64.51020, "Type": 2},
-        {"City": "Kouchibouguac", "Lat": 46.79534, "Lon": -65.05671, "Type": 2},
-        {"City": "Fundy", "Lat": 45.61394, "Lon": -65.03284, "Type": 3},
-        {"City": "Gagetown", "Lat": 45.78214, "Lon": -66.14849, "Type": 2}
-    ]
-    
-    #Initialize station location, and epsilons needed to convert grid coordinates to lats and longs
-    stationData = {}
+    #Initialize top left lat and lon of NB and epsilons needed to convert grid coordinates to lats and longs
     top_left_lon = -67.779559
     top_left_lat = 47.846172
     epsLat = 0.009
@@ -37,7 +16,7 @@ def generateStationMap(saveMap, filePath, location):
     # Set the tower types to be used and iterated through
     types = {1: "Type A: Water Plane", 2: "Type B: Fire Truck", 3: "Type C: ATV"}
     # Set the radius for each tower type
-    diam = {1: 200, 2: 120, 3: 80}
+    diam = [200, 120, 80]
 
     # Create the base figure to be edited
     fig = go.Figure()
@@ -71,23 +50,35 @@ def generateStationMap(saveMap, filePath, location):
         loc = 11
     if(location == "Gagetown"):
         loc = 12
+        
+    #Get the data for the given location
+    data = fire_resource_plan.assign_firestation_to_key_locs()
+    data = data[loc]
     
-    # Iterate through the data list to
+    # Iterate through the data list to draw the bubbles
     for i in range(len(data)):
-        tempLon = data[i]["Lon"]
-        tempLat = data[i]["Lat"]
-        towerType = data[i]["Type"]
+        #These have to be grabbed outside the trace
+        tempLon = top_left_lon + (data[i][1] * epsLon)
+        tempLat = top_left_lat - (data[i][0] * epsLat)
+        towerType = data[i][2]
+        #Convert types to ints so they can grab from their respective lists
+        if towerType == 'A':
+            towerInt = 0
+        if towerType == 'B':
+            towerInt = 1
+        if towerType == 'C':
+            towerInt = 2
         fig.add_trace(
             go.Scattergeo(
-                # Pull all the necessary data
-                text=data[i]["City"],
-                name=data[i]["City"] + ", Type " + str(towerType),
+                # Give all necessary data
+                text= "Type " + str(towerType),
+                name= "Type " + str(towerType),
                 lat=[tempLat],
                 lon=[tempLon],
                 marker=dict(
                     sizemode="diameter",  # THIS MEANS THE BUBBLES USE DIAMETER, KEEP IN MIND DURING CALCULATION
-                    size=diam[towerType],  # Size to scale
-                    color=colors[towerType - 1],
+                    size=diam[towerInt],  # Size to scale
+                    color=colors[towerInt],
                     line_width=0,
                     opacity=0.5,
                 ),
@@ -98,8 +89,10 @@ def generateStationMap(saveMap, filePath, location):
     fig.update_layout(
         # Title the map
         title=go.layout.Title(text="Optimized Firetower Placement"),
+        showlegend=True,
         # Give the layout (zoom, etc) of the map
         geo=go.layout.Geo(
+            
             resolution=50,  # 1:50 resolution
             scope="north america",  # Render only north america (that it is the closest to only NB possible)
             showframe=True,  # Show the frame to deliniate between map and non-map
@@ -136,5 +129,5 @@ def generateStationMap(saveMap, filePath, location):
     # If this function was activated by the 'Save Map' button, save it without making the map pop up in the browser
     if saveMap == True:
         fig.write_image(
-            filePath + "/fireTowerMap.png"
+            filePath + "/fireStationMap.png"
         )  # Uses kaleido (pip install -U kaleido)
