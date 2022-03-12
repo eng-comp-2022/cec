@@ -71,8 +71,8 @@ def generateStationMap(saveMap, filePath, location):
         fig.add_trace(
             go.Scattergeo(
                 # Give all necessary data
-                text="Longitude: " +  str(tempLon) + ", Latitude: " + str(tempLat) + ", Type " + str(towerType),
-                name= towerType,
+                text= "Type " + str(towerType),
+                name= "Type " + str(towerType),
                 lat=[tempLat],
                 lon=[tempLon],
                 marker=dict(
@@ -89,8 +89,10 @@ def generateStationMap(saveMap, filePath, location):
     fig.update_layout(
         # Title the map
         title=go.layout.Title(text="Optimized Firetower Placement"),
+        showlegend=True,
         # Give the layout (zoom, etc) of the map
         geo=go.layout.Geo(
+            
             resolution=50,  # 1:50 resolution
             scope="north america",  # Render only north america (that it is the closest to only NB possible)
             showframe=True,  # Show the frame to deliniate between map and non-map
