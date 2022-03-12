@@ -10,7 +10,7 @@ import json
 top_left_lat = -67.66776684614666
 top_left_lon = 47.74668297874867
 eps = 0.007992
-eps2 = 0.02
+eps2 = 0.1
 width = 246
 height = 304
 
