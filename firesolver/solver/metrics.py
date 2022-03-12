@@ -1,8 +1,8 @@
-import dataloader
+from solver import dataloader
 import numpy as np
 from statsmodels.stats.weightstats import ztest as ztest
 import math
-import sys
+import pandas as pd
 
 # np.set_printoptions(threshold=sys.maxsize)
 
@@ -28,6 +28,25 @@ def grid_metrics():
         + np.multiply(DC, 0.15)
     )
     return metric
+
+
+def displayable_metrics():
+    grid_data = grid_metrics()
+    rows, cols = grid_data.shape
+
+    def display_idx(row_idx, col_idx):
+        return row_idx + rows * col_idx
+
+    display_idxs = []
+    for row in range(0, rows):
+        for col in range(0, cols):
+            display_idxs.append(display_idx(row, col))
+
+    t_grid_data = np.transpose(grid_data)
+
+    display_metrics = {"id": display_idxs, "risk": t_grid_data.flatten()}
+
+    return pd.DataFrame.from_dict(display_metrics)
 
 
 def significant_areas(data, z_threshold=1):
@@ -86,6 +105,8 @@ if __name__ == "__main__":
     # print("SE:LRRRRRRRRJJJJj")
     # print(drought_code(rain_data()))
     # print(duff_moisture_content(rain_data()))
-    s = significant_areas(grid_metrics())
-    print(s[s == True].size)
-    print(s.size)
+    # s = significant_areas(grid_metrics())
+    # print(s[s == True].size)
+    # print(s.size)
+    # print(grid_metrics())
+    print(displayable_metrics())
