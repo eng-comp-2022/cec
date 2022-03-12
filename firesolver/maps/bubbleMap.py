@@ -5,7 +5,7 @@ import pandas as pd
 # ##############################
 
 # Generate the map of NB using a csv created by the optimization
-def generateMap(saveMap, filePath):
+def generateFireStationMap(saveMap, filePath):
 
     # Fake Data to show form it should take, as well as for building/testing
     # Format is City, Lat, Lon, Type
