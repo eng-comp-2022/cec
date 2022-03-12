@@ -47,6 +47,4 @@ a tool to solve fires ;)
 
 ## Data & Config Files
 
-**Data Files:**
-
-- **data.txt:** explanation of data file
+All data files are in the *csv* format, stored in the `data/` project directory, and are automatically loaded by the program. No configuration files are required by the user.
