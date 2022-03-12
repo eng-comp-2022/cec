@@ -50,27 +50,27 @@ def generateStationMap(saveMap, filePath, location):
     
     #Check which location is attempting to be viewed
     if(location == "Saint John"):
-        loc = 0
-    if(location == "Moncton"):
-        loc = 1
-    if(location == "Fredericton"):
         loc = 2
-    if(location == "Miramichi"):
+    if(location == "Moncton"):
         loc = 3
-    if(location == "Bathurst"):
+    if(location == "Fredericton"):
         loc = 4
-    if(location == "Mactaquac"):
+    if(location == "Miramichi"):
         loc = 5
-    if(location == "Mount Carleton"):
+    if(location == "Bathurst"):
         loc = 6
-    if(location == "Parlee Beach"):
+    if(location == "Mactaquac"):
         loc = 7
-    if(location == "Kouchibouguac"):
+    if(location == "Mount Carleton"):
         loc = 8
-    if(location == "Fundy"):
+    if(location == "Parlee Beach"):
         loc = 9
-    if(location == "Gagetown"):
+    if(location == "Kouchibouguac"):
         loc = 10
+    if(location == "Fundy"):
+        loc = 11
+    if(location == "Gagetown"):
+        loc = 12
     
     # Iterate through the data list to
     for i in range(len(data)):
