@@ -1,8 +1,8 @@
 from cmath import inf
 import math
 from webbrowser import get
-import dataloader
 import numpy as np
+from solver import dataloader
 
 
 def get_distance(x1, x2, y1, y2):
